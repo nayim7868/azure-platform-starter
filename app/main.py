@@ -28,8 +28,7 @@ async def log_requests(request, call_next):
 @app.get("/health")
 def health():
     """Health check for load balancers and monitoring."""
-    return {"status": "ok"}
-
+    return {"status": "ok", "source": "github-actions"}
 
 @app.get("/version")
 def version():
