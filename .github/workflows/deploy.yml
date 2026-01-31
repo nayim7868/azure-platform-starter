@@ -31,7 +31,10 @@ jobs:
 
       - name: Create deployment package
         run: |
-          zip -r deploy.zip . -x ".git/*" ".venv/*" "__pycache__/*" "*.pyc"
+          rm -f deploy.zip
+          zip -r deploy.zip . \
+            -x ".git/*" ".venv/*" "__pycache__/*" "*.pyc" "deploy.zip" ".github/*"
+
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
