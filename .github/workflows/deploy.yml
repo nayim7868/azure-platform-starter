@@ -3,9 +3,10 @@ name: CI/CD - Deploy to Azure Web App
 on:
   push:
     branches: ["main"]
-
+    
 env:
   AZURE_WEBAPP_NAME: app-azure-platform-starter-am-482
+  PYTHONPATH: .
 
 jobs:
   build-test-deploy:
