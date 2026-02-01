@@ -10,9 +10,11 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-configure_azure_monitor(  # pyright: ignore[reportUndefinedVariable]
-    connection_string=os.getenv("APPLICATIONINSIGHTS_CONNECTION_STRING")
-)
+
+conn = os.getenv("APPLICATIONINSIGHTS_CONNECTION_STRING")
+if conn:
+    from azure.monitor.opentelemetry import configure_azure_monitor
+    configure_azure_monitor(connection_string=conn)
 
 @app.middleware("http")
 async def log_requests(request, call_next):
