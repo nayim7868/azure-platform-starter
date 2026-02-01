@@ -5,16 +5,21 @@ import json
 import os
 import time
 
-from azure.monitor.opentelemetry import configure_azure_monitor
-from fastapi import FastAPI
 
-app = FastAPI()
+
 
 
 conn = os.getenv("APPLICATIONINSIGHTS_CONNECTION_STRING")
 if conn:
-    from azure.monitor.opentelemetry import configure_azure_monitor
+    from azure.monitor.opentelemetry import configure_azure_monitor  # type: ignore
     configure_azure_monitor(connection_string=conn)
+
+from fastapi import FastAPI
+app = FastAPI()
+
+if conn:
+    from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor  # type: ignore
+    FastAPIInstrumentor.instrument_app(app)
 
 @app.middleware("http")
 async def log_requests(request, call_next):
