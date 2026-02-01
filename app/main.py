@@ -4,11 +4,13 @@ Minimal FastAPI service with health, version, crash endpoints and request loggin
 import json
 import os
 import time
+
+from azure.monitor.opentelemetry import configure_azure_monitor
 from fastapi import FastAPI
 
 app = FastAPI()
 
-configure_azure_monitor(
+configure_azure_monitor(  # pyright: ignore[reportUndefinedVariable]
     connection_string=os.getenv("APPLICATIONINSIGHTS_CONNECTION_STRING")
 )
 
