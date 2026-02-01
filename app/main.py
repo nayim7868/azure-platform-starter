@@ -8,6 +8,9 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
+configure_azure_monitor(
+    connection_string=os.getenv("APPLICATIONINSIGHTS_CONNECTION_STRING")
+)
 
 @app.middleware("http")
 async def log_requests(request, call_next):
